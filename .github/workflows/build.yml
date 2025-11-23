@@ -9,9 +9,6 @@ on:
 permissions:
   contents: write
 
-env:
-  KERNEL_VERSION: ${{vars.KERNEL_MAJOR}}.${{vars.KERNEL_MINOR}}.${{vars.KERNEL_PATCH}}
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,9 +22,9 @@ jobs:
 
       - name: Download kernel source
         run: |
-          wget -q "https://cdn.kernel.org/pub/linux/kernel/v${{vars.KERNEL_MAJOR}}.x/linux-$KERNEL_VERSION.tar.xz"
-          tar -xvf linux-$KERNEL_VERSION.tar.xz
-          mv linux-$KERNEL_VERSION linux
+          wget -q "https://cdn.kernel.org/pub/linux/kernel/v${{vars.KERNEL_MAJOR}}.x/linux-${{vars.KERNEL_MAJOR}}.${{vars.KERNEL_MINOR}}.${{vars.KERNEL_PATCH}}.tar.xz"
+          tar -xvf linux-${{vars.KERNEL_MAJOR}}.${{vars.KERNEL_MINOR}}.${{vars.KERNEL_PATCH}}.tar.xz
+          mv linux-${{vars.KERNEL_MAJOR}}.${{vars.KERNEL_MINOR}}.${{vars.KERNEL_PATCH}} linux
 
       - name: Build samurai kernel
         working-directory: linux
@@ -38,9 +35,9 @@ jobs:
       - name: Collect .deb files
         run: |
           ls -la
-          mv linux-image-*.deb samurai-$KERNEL_VERSION-amd64.deb
-          mv linux-headers-*.deb samurai-headers-$KERNEL_VERSION-amd64.deb
-          mv linux-libc-dev*.deb samurai-libc-dev-$KERNEL_VERSION-amd64.deb
+          mv linux-image-*.deb samurai-${{vars.KERNEL_MAJOR}}.${{vars.KERNEL_MINOR}}.${{vars.KERNEL_PATCH}}-amd64.deb
+          mv linux-headers-*.deb samurai-headers-${{vars.KERNEL_MAJOR}}.${{vars.KERNEL_MINOR}}.${{vars.KERNEL_PATCH}}-amd64.deb
+          mv linux-libc-dev*.deb samurai-libc-dev-${{vars.KERNEL_MAJOR}}.${{vars.KERNEL_MINOR}}.${{vars.KERNEL_PATCH}}-amd64.deb
           ls -la
           mkdir -p artifacts
           mv *.deb artifacts/
