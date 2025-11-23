@@ -20,11 +20,11 @@ jobs:
         run: |
           sudo apt update && sudo apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev fakeroot bc wget tar liblz4-tool lz4 xz-utils gh
 
-      - name: Download kernel mainline source
+      - name: Clone kernel mainline source
         run: |
-          wget -q "https://git.kernel.org/torvalds/t/linux-${{vars.KERNEL_VERSION}}.tar.gz"
-          tar -xvf linux-${{vars.KERNEL_VERSION}}.tar.gz
-          mv linux-${{vars.KERNEL_VERSION}} linux
+          git clone --depth=1 --branch v${{ vars.KERNEL_VERSION }} \
+            https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git \
+            linux
 
       - name: Build samurai kernel
         working-directory: linux
