@@ -20,11 +20,11 @@ jobs:
         run: |
           sudo apt update && sudo apt install -y build-essential libncurses-dev bison flex libssl-dev libelf-dev fakeroot bc wget tar liblz4-tool lz4 xz-utils gh
 
-      - name: Download kernel source
+      - name: Download kernel mainline source
         run: |
-          wget -q "https://cdn.kernel.org/pub/linux/kernel/v${{vars.KERNEL_MAJOR}}.x/linux-${{vars.KERNEL_MAJOR}}.${{vars.KERNEL_MINOR}}${{vars.KERNEL_PATCH}}.tar.xz"
-          tar -xvf linux-${{vars.KERNEL_MAJOR}}.${{vars.KERNEL_MINOR}}${{vars.KERNEL_PATCH}}.tar.xz
-          mv linux-${{vars.KERNEL_MAJOR}}.${{vars.KERNEL_MINOR}}${{vars.KERNEL_PATCH}} linux
+          wget -q "https://git.kernel.org/torvalds/t/linux-${{vars.KERNEL_VERSION}}.tar.gz"
+          tar -xvf linux-${{vars.KERNEL_VERSION}}.tar.gz
+          mv linux-${{vars.KERNEL_VERSION}}.tar.gz linux
 
       - name: Build samurai kernel
         working-directory: linux
@@ -35,9 +35,9 @@ jobs:
       - name: Collect .deb files
         run: |
           ls -la
-          mv linux-image-*.deb samurai-${{vars.KERNEL_MAJOR}}.${{vars.KERNEL_MINOR}}${{vars.KERNEL_PATCH}}-amd64.deb
-          mv linux-headers-*.deb samurai-headers-${{vars.KERNEL_MAJOR}}.${{vars.KERNEL_MINOR}}${{vars.KERNEL_PATCH}}-amd64.deb
-          mv linux-libc-dev*.deb samurai-libc-dev-${{vars.KERNEL_MAJOR}}.${{vars.KERNEL_MINOR}}${{vars.KERNEL_PATCH}}-amd64.deb
+          mv linux-image-*.deb samurai-${{vars.KERNEL_VERSION}}-amd64.deb
+          mv linux-headers-*.deb samurai-headers-${{vars.KERNEL_VERSION}}-amd64.deb
+          mv linux-libc-dev*.deb samurai-libc-dev-${{vars.KERNEL_VERSION}}-amd64.deb
           ls -la
           mkdir -p artifacts
           mv *.deb artifacts/
