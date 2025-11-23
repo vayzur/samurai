@@ -1,4 +1,8 @@
-# Samurai
+# SAMURAI
 
-Samurai is a **high-performance, low-latency** Linux kernel optimized for workloads that demand extreme responsiveness. It is **not a generic-use kernel**—it is stripped down to the bare essentials, built for **Edge, VoIP, Gaming, and VPNs**, where every microsecond counts.
+Minimalist linux kernel optimized for real-time workloads.
+
+**100Hz**
+**PREEMPT_RT**
+**CONFIG_SMP** disabled for single core VM's.
 
