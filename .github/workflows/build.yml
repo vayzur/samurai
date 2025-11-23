@@ -24,7 +24,7 @@ jobs:
         run: |
           wget -q "https://git.kernel.org/torvalds/t/linux-${{vars.KERNEL_VERSION}}.tar.gz"
           tar -xvf linux-${{vars.KERNEL_VERSION}}.tar.gz
-          mv linux-${{vars.KERNEL_VERSION}}.tar.gz linux
+          mv linux-${{vars.KERNEL_VERSION}} linux
 
       - name: Build samurai kernel
         working-directory: linux
