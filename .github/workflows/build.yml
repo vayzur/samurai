@@ -32,7 +32,7 @@ jobs:
       - name: Build samurai kernel
         working-directory: linux
         run: |
-          cp ../.config .
+          cp ../config .config
           fakeroot make -j$(nproc) deb-pkg LOCALVERSION=-samurai
 
       - name: Collect .deb files
